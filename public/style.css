@@ -1,0 +1,194 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333;
+    background-color: #f8f8f8;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+.hero-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+section {
+    padding: 60px 20px;
+}
+
+#location iframe {
+    width: 90%;
+    height: 350px;
+    border: none;
+    margin: 20px auto;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+.contact-button {
+    background-color: #8fbc8f;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.contact-button:hover {
+    background-color: #77a877;
+}
+
+footer {
+    background-color: #e8f0e8;
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+/* Snowflakes Styles */
+.snowflakes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1; /* Place behind other content */
+}
+
+.snowflake {
+    position: absolute;
+    top: -10px;
+    font-size: 1em;
+    color: #fff;
+    opacity: 0.7;
+    animation: snowfall linear infinite;
+}
+
+.snowflake:nth-child(1) {
+    left: 10%;
+    animation-duration: 10s;
+}
+
+.snowflake:nth-child(2) {
+    left: 20%;
+    animation-duration: 12s;
+}
+
+.snowflake:nth-child(3) {
+    left: 30%;
+    animation-duration: 14s;
+}
+
+.snowflake:nth-child(4) {
+    left: 40%;
+    animation-duration: 16s;
+}
+
+.snowflake:nth-child(5) {
+    left: 50%;
+    animation-duration: 18s;
+}
+
+.snowflake:nth-child(6) {
+    left: 60%;
+    animation-duration: 20s;
+}
+
+.snowflake:nth-child(7) {
+    left: 70%;
+    animation-duration: 22s;
+}
+
+.snowflake:nth-child(8) {
+    left: 80%;
+    animation-duration: 24s;
+}
+
+.snowflake:nth-child(9) {
+    left: 90%;
+    animation-duration: 26s;
+}
+
+.snowflake:nth-child(10) {
+    left: 5%;
+    animation-duration: 28s;
+}
+
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* Carousel Styles */
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px; /* Adjust spacing */
+}
+
+.carousel-slide {
+    display: flex;
+    width: 300%; /* 3 images * 100% */
+    animation: carousel 15s infinite alternate; /* Adjust speed */
+}
+
+.carousel-slide img {
+    width: calc(100% / 3); /* Divide the width equally among the images */
+    height: auto;
+    object-fit: cover; /* Maintain aspect ratio */
+}
+
+@keyframes carousel {
+    0% { transform: translateX(0); }
+    28% { transform: translateX(0); } /*hold first image briefly*/
+    33% { transform: translateX(-33.333%); }
+    61% { transform: translateX(-33.333%); } /*hold second image briefly*/
+    66% { transform: translateX(-66.666%); }
+    94% { transform: translateX(-66.666%); } /*hold third image briefly*/
+    100% { transform: translateX(0); }
+}
+
+#datetime {
+    font-size: 1.2em;
+    margin-top: 10px; /* Add some spacing */
+    color: #555; /* A slightly darker color */
+  }

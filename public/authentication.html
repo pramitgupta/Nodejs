@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Study Group Authentication</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Optional Bootstrap Animation CSS (using Animate.css) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .page { display: none; }
+    .visible { display: block; }
+    .container-custom { max-width: 500px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <div class="container-custom">
+    <!-- Home Page -->
+    <div id="home-page" class="page visible text-center">
+      <h2 class="mt-5">Welcome to the MLBM Study Group Finder</h2>
+      <p>Please choose an option:</p>
+      <button id="btn-login" class="btn btn-primary m-2">Login</button>
+      <button id="btn-signup" class="btn btn-success m-2">Sign Up</button>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page">
+      <h2 class="mt-5">Login (Format: Abc_Xyz@isb.edu)</h2>
+      <div class="form-group">
+        <input type="email" id="login-email" class="form-control" placeholder="Email Address" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="login-pgid" class="form-control" placeholder="Password (PGID)" required>
+      </div>
+      <button id="btn-do-login" class="btn btn-primary">Login</button>
+      <p id="login-message" class="text-danger mt-2"></p>
+      <button id="btn-back-home-from-login" class="btn btn-link">Back to Home</button>
+    </div>
+
+    <!-- Sign Up Page -->
+    <div id="signup-page" class="page">
+      <h2 class="mt-5">Sign Up</h2>
+      <div class="form-group">
+        <input type="text" id="signup-name" class="form-control" placeholder="Full Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" id="signup-email" class="form-control" placeholder="Email Address" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="signup-pgid" class="form-control" placeholder="Password (PGID)" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="signup-group" class="form-control" placeholder="Study Group ID" required>
+      </div>
+      <button id="btn-do-signup" class="btn btn-success">Sign Up</button>
+      <p id="signup-message" class="text-danger mt-2"></p>
+      <button id="btn-back-home-from-signup" class="btn btn-link">Back to Home</button>
+    </div>
+  </div>
+
+  <!-- Bootstrap Modal for Profile (Login Success) -->
+  <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered animate__animated animate__fadeInDown" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalTitle">Profile</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modal-close-button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="profile-message">
+          <!-- Welcome message will be inserted here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn-logout" class="btn btn-secondary" data-dismiss="modal">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript dependencies: jQuery, Popper.js, and Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Helper: Show one page and hide others
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("visible"));
+      document.getElementById(pageId).classList.add("visible");
+    }
+
+    // Login function: Send login request to the Node.js server
+    async function doLogin() {
+      const email = document.getElementById("login-email").value.trim().toLowerCase();
+      const pgid = document.getElementById("login-pgid").value.trim();
+      const loginMessage = document.getElementById("login-message");
+      loginMessage.textContent = "";
+
+      if (!email || !pgid) {
+        loginMessage.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, pgid })
+        });
+        const result = await response.json();
+        if (result.success) {
+          const profileHTML = `<strong>Welcome ${result.user["Name"]}!</strong><br>Your Study Group: ${result.user["Group IDs"]}`;
+          document.getElementById("profile-message").innerHTML = profileHTML;
+          $('#profileModal').modal('show');
+        } else {
+          loginMessage.textContent = result.message;
+        }
+      } catch (error) {
+        loginMessage.textContent = "Error during login. Please try again.";
+      }
+    }
+
+    // Sign up function: Send signup request to the Node.js server
+    async function doSignup() {
+      const name = document.getElementById("signup-name").value.trim();
+      const email = document.getElementById("signup-email").value.trim().toLowerCase();
+      const pgid = document.getElementById("signup-pgid").value.trim();
+      const group = document.getElementById("signup-group").value.trim();
+      const signupMessage = document.getElementById("signup-message");
+      signupMessage.textContent = "";
+
+      if (!name || !email || !pgid || !group) {
+        signupMessage.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, pgid, group })
+        });
+        const result = await response.json();
+        signupMessage.textContent = result.success ? result.message : result.message;
+      } catch (error) {
+        signupMessage.textContent = "Error during signup. Please try again.";
+      }
+    }
+
+    // Event listeners for navigation and actions
+    document.getElementById("btn-login").addEventListener("click", () => { showPage("login-page"); });
+    document.getElementById("btn-signup").addEventListener("click", () => { showPage("signup-page"); });
+    document.getElementById("btn-back-home-from-login").addEventListener("click", () => { showPage("home-page"); });
+    document.getElementById("btn-back-home-from-signup").addEventListener("click", () => { showPage("home-page"); });
+    document.getElementById("btn-do-login").addEventListener("click", doLogin);
+    document.getElementById("btn-do-signup").addEventListener("click", doSignup);
+    document.getElementById("btn-logout").addEventListener("click", () => {
+      $('#profileModal').modal('hide');
+      showPage("home-page");
+    });
+  </script>
+</body>
+</html>
