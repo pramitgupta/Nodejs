@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenLeaf Organics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+    </div>
+
+    <header class="hero-container" style="position: relative;">
+      
+        <img src="https://th.bing.com/th/id/OIG3.q8b_.8MP_4NwIFAjy.uA?pid=ImgGn" alt="Farmers Market Banner" class="hero-image">
+        <div class="hero-overlay"></div>
+        <div class="hero-text">
+            <h1>GreenLeaf Organics</h1>
+            <p>Your Local Organic Grocer</p>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img src="https://th.bing.com/th/id/OIG3.8mid478vdl5SklKLj8HQ?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Organic Produce 1">
+                <img src="https://th.bing.com/th/id/OIG3.bHSX013yxbMviwXoK70W?pid=ImgGn" alt="Organic Produce 2">
+                <img src="https://th.bing.com/th/id/OIG3.UOFDsXjZ78LD7rn_cZJl?pid=ImgGn" alt="Organic Produce 3">
+            </div>
+        </div>
+        <div id="datetime"></div>
+    </header>
+    <section id="about-home">
+        <h2>About Us</h2>
+        <p>We're dedicated to bringing you the freshest, locally sourced organic produce and goods. Our mission is to support healthy living and sustainable agriculture in Hyderabad and beyond.</p>
+        <p><a href="about.html">Learn more about our story.</a></p>
+    </section>
+    <section id="products-home">
+        <h2>Our Products</h2>
+        <img src="https://th.bing.com/th/id/OIG4.nYdGv188TCQTNDhuiX5W?pid=ImgGn" alt="Organic Produce Display" class="product-image">
+        <p>Explore our wide selection of fresh, organic produce and pantry staples.</p>
+        <p><a href="products.html">View all our products.</a></p>
+    </section>
+    <section id="contact-home">
+        <h2>Contact Us</h2>
+        <p>Have questions? Get in touch with us!</p>
+        <p><a href="contact.html">Contact us today.</a></p>
+        <p><a href="authentication.html">Want to know your Group ID!!</a></p>
+    </section>
+    <footer>
+        <p>© 2024 GreenLeaf Organics</p>
+    </footer>
+
+    <script>
+    function updateDateTime() {
+      const now = new Date();
+      const dateTimeString = now.toLocaleString(); // Get date and time as a string
+      document.getElementById('datetime').textContent = dateTimeString;
+    }
+    // Update the date and time every second
+    setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>
